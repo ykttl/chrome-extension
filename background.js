@@ -1,7 +1,14 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function() {
-  console.log('install');
+console.log('hello!');
+// chrome.runtime.onInstalled.addListener(function() {
+//   console.log('install');
+// });
+
+chrome.storage.local.set({
+  // date: date,
+  // isPaused: false,
+  // countdownMaxInMin: countdownMaxInMin
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -16,7 +23,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
       type: 'basic',
       title: 'Time to stan up and do excersize!',
       message: '30 pun tatimashita',
-      iconUrl: 'images/get_started48.png',
+      iconUrl: 'images/otter1.png',
       requireInteraction: true
     });
   }
