@@ -1,20 +1,44 @@
 'use strict';
 
-console.log('hello!');
-// chrome.runtime.onInstalled.addListener(function() {
-//   console.log('install');
+var countingTimer;
+
+// countdown timer
+function startTimer(duration, display) {
+  var timer = duration * 60,
+    minutes,
+    seconds;
+  countingTimer = setInterval(function() {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    //display.textContent = minutes + ':' + seconds;
+    chrome.runtime.sendMessage({ minutes: minutes, seconds: seconds });
+    if (--timer < 0) {
+      timer = duration;
+    }
+  }, 1000);
+}
+
+// chrome.storage.local.get('numnum', function(data) {
+//   // chrome.alarms.create('alarm_1', {
+//   //   periodInMinutes: parseInt(data.numnum, 10)
+//   // });
+//   // startTimer(data.numnum);
 // });
 
-chrome.storage.local.set({
-  // date: date,
-  // isPaused: false,
-  // countdownMaxInMin: countdownMaxInMin
-});
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  chrome.alarms.create('alarm_1', {
-    periodInMinutes: parseInt(request.time, 10)
-  });
+  if (request.type === 'm1') {
+    chrome.alarms.create('alarm_1', {
+      periodInMinutes: 1
+    });
+    startTimer(request.time);
+  }
+  if (request.playCountDown === false) {
+    clearInterval(countingTimer);
+  }
 });
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
