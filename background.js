@@ -1,52 +1,49 @@
 'use strict';
 
-var countingTimer;
+var TimerSetInterval;
 
-// countdown timer
+// countdown timer function
 function startTimer(duration, display) {
-  var timer = duration * 60,
+  var duration = duration * 60; // convert minutes to millisecond
+  var timer = duration,
     minutes,
     seconds;
-  countingTimer = setInterval(function() {
+  TimerSetInterval = setInterval(function() {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
-
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
-    //display.textContent = minutes + ':' + seconds;
     chrome.runtime.sendMessage({ minutes: minutes, seconds: seconds });
+
     if (--timer < 0) {
       timer = duration;
     }
   }, 1000);
 }
 
-// chrome.storage.local.get('numnum', function(data) {
-//   // chrome.alarms.create('alarm_1', {
-//   //   periodInMinutes: parseInt(data.numnum, 10)
-//   // });
-//   // startTimer(data.numnum);
-// });
-
+// when START button is pressed and received data from props.js,
+// create an alarm and start countdown timer,
+// or stop the timer when CLEAR button is pressed.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === 'm1') {
+  if (request.STARTisPressed) {
     chrome.alarms.create('alarm_1', {
-      periodInMinutes: 1
+      periodInMinutes: request.time
     });
     startTimer(request.time);
   }
-  if (request.playCountDown === false) {
-    clearInterval(countingTimer);
+  if (request.CLEARisPressed) {
+    clearInterval(TimerSetInterval);
   }
 });
 
+// When an alarm is fired, send a notification.
 chrome.alarms.onAlarm.addListener(function(alarm) {
   if (alarm.name == 'alarm_1') {
     chrome.notifications.create({
       type: 'basic',
-      title: 'Time to stan up and do excersize!',
-      message: '30 pun tatimashita',
+      title: 'Time to take a break!',
+      message: `Stand up from chair. Take eyes break.`,
       iconUrl: 'images/otter1.png',
       requireInteraction: true
     });

@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      .container {
-        width: 300px;
-      }
-      #input {
-        width: 30px;
-      }
-    </style>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="container ">
-      <p>Exercise Reminder</p>
-      <p>Don't Sit Too Long!</p>
-      <span id="countdown"></span>
+      <h1>
+        Exercise Reminder
+        <img src="images/otter2.png" width="40px" />
+      </h1>
+      <p id="countdown"></p>
       <div>
         Remind me every
-        <select id="time">
-          <option disabled selected value> -- select -- </option>
-          <option value="1">1</option>
+        <select id="selector">
+          <option disabled selected value> -- </option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
@@ -29,11 +23,9 @@
         </select>
         minutes!
       </div>
-      <button id="setAlarm">START</button>
-      <button id="clearAlarm">CLEAR</button>
+      <button id="setAlarm" class="btn">START</button>
+      <button id="clearAlarm" class="btn">CLEAR</button>
     </div>
-
-    <!-- <script src="s1.js"></script> -->
     <script src="popup.js"></script>
   </body>
 </html>
