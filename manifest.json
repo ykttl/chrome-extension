@@ -1,14 +1,8 @@
 {
   "name": "Exercise Reminder",
   "version": "1.0",
-  "description": "Don't sit too long!",
-  "permissions": [
-    "activeTab",
-    "declarativeContent",
-    "storage",
-    "alarms",
-    "notifications"
-  ],
+  "description": "Set a timer to take a movement break.",
+  "permissions": ["storage", "alarms", "notifications"],
   "web_accessible_resources": ["images/otter2.png"],
   "background": {
     "scripts": ["background.js"],

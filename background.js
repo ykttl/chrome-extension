@@ -3,6 +3,8 @@
 var TimerSetInterval;
 
 // countdown timer function
+// this will keep running even after closing popup
+// because it's in background.js, not in popup.js
 function startTimer(duration, display) {
   var duration = duration * 60; // convert minutes to millisecond
   var timer = duration,
@@ -22,7 +24,7 @@ function startTimer(duration, display) {
   }, 1000);
 }
 
-// when START button is pressed and received data from props.js,
+// when START button is pressed and received data from popup.js,
 // create an alarm and start countdown timer,
 // or stop the timer when CLEAR button is pressed.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -43,7 +45,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
     chrome.notifications.create({
       type: 'basic',
       title: 'Time to take a break!',
-      message: `Stand up from chair. Take eyes break.`,
+      message: `Stand up from chair. Move around and take eyes break.`,
       iconUrl: 'images/otter1.png',
       requireInteraction: true
     });
