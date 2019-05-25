@@ -12,7 +12,7 @@ This chrome extension will continuously produce a popup notification each time a
 
 ---
 
-##How to try the demo
+## How to try the demo
 
 1. Download repository ZIP file and unzip it.
 2. Open chrome and go to "chrome://extensions".
